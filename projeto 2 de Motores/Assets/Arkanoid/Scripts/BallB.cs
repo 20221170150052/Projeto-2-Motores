@@ -13,7 +13,6 @@ public class BallB : MonoBehaviour
     {
         TryGetComponent(out rb);
         direcao = Vector2.zero;
-        DispararBolinha(0);
     }
 
     public void DispararBolinha(float inputX)
@@ -33,9 +32,13 @@ public class BallB : MonoBehaviour
         if (col.gameObject.CompareTag("Tijolo"))
         {
             Destroy(col.gameObject);
+            GameManagerB.instance.SubtrairTijolo();
         }
         
-
+        if (col.gameObject.CompareTag ("GameOver"))
+        {
+            GameManagerB.instance.subtrairVida();
+        }
         direcao = Vector2.Reflect(direcao, col.contacts[0].normal);
         rb.velocity = direcao.normalized * velocidade;
     }
